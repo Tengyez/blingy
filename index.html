@@ -3,124 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>White Glass Interface</title>
+    <title>3D Rendered Glass Interface</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            /* Pure White Background */
-            background-color: #ffffff;
+            /* We need a slightly muted, dynamic background so the white glass highlights actually show up */
+            background-color: #f0f4f8;
+            background-image: 
+                radial-gradient(at 20% 20%, rgba(219, 234, 254, 0.6) 0, transparent 50%), 
+                radial-gradient(at 80% 80%, rgba(243, 232, 255, 0.6) 0, transparent 50%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Using a light mesh gradient to subtly enhance depth */
-            background: 
-                radial-gradient(at 0% 0%, rgba(200, 220, 255, 0.2) 0, transparent 50%), 
-                radial-gradient(at 100% 100%, rgba(255, 200, 200, 0.1) 0, transparent 50%),
-                #ffffff;
         }
 
-        /* The Main Frosted Glass Panel */
+        /* The Main Thick Glass Panel */
         .glass-panel {
-            /* Increased transparency and brightness for light background */
-            background: rgba(255, 255, 255, 0.1); 
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 100%);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             
-            /* Hyper-glassy: intensified blur and saturation */
-            backdrop-filter: blur(50px) saturate(200%);
-            -webkit-backdrop-filter: blur(50px) saturate(200%);
-
-            /* Subtle light border to capture edges */
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            
-            /* Complex, layered shadow to create deep, diffused float */
+            /* Stacking shadows to create: 
+               1. A sharp white top-left highlight (simulates light source)
+               2. A subtle inner darkness (simulates glass thickness)
+               3. A soft, diffuse drop shadow (simulates floating) */
             box-shadow: 
-                0 10px 30px 0 rgba(0, 0, 0, 0.05),
-                0 25px 60px 0 rgba(0, 0, 0, 0.1),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.05); /* very faint inner shine */
+                inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.9),
+                inset -2px -2px 5px rgba(0, 0, 0, 0.03),
+                0 20px 40px -10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
-        /* Individual Glass Buttons/Cards */
-        .liquid-card {
-            background: rgba(255, 255, 255, 0.01);
-            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        /* The Colored "Liquid" Blocks */
+        .liquid-block {
             position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(2px); /* Very subtle base blur */
-        }
-
-        /* Interactive "Floating/Glow" Effect */
-        .liquid-card::before {
-            content: "";
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
-            transform: scale(0);
-            transition: transform 0.7s ease;
-        }
-
-        .liquid-card:hover::before {
-            transform: scale(1);
-        }
-
-        .liquid-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px); /* Increases glassiness on hover */
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+            
+            /* The base gradient provides the core color, but heavily transparent */
+            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.05) 100%);
+            
+            /* Intense 3D rendering shadows */
             box-shadow: 
-                0 20px 50px rgba(0, 0, 0, 0.15), 
-                inset 0 0 25px rgba(255, 255, 255, 0.1);
+                inset 2px 2px 4px rgba(255, 255, 255, 0.8),    /* Top-left specular highlight */
+                inset -4px -4px 8px rgba(0, 0, 0, 0.06),       /* Bottom-right glass thickness */
+                inset 0 0 20px rgba(255, 255, 255, 0.4),       /* Overall inner glow */
+                0 15px 25px -5px rgba(0, 0, 0, 0.1);           /* Deep drop shadow */
+                
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Adding a glossy diagonal "shine" across the blocks to fake a light reflection */
+        .liquid-block::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 24px;
+            background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.4) 25%, transparent 30%);
+            pointer-events: none; /* So it doesn't block clicks */
+        }
+
+        .liquid-block:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                inset 2px 2px 5px rgba(255, 255, 255, 1),
+                inset -4px -4px 8px rgba(0, 0, 0, 0.08),
+                inset 0 0 25px rgba(255, 255, 255, 0.6),
+                0 25px 35px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Specific Colors applied underneath the glass */
+        .color-orange { background-color: rgba(251, 146, 60, 0.2); }
+        .color-blue { background-color: rgba(96, 165, 250, 0.2); }
+        .color-clear { background-color: rgba(255, 255, 255, 0.1); }
+
+        /* The 3D Glass Buttons */
+        .glass-btn {
+            background: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.1) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.4);
+            /* Pillowed button effect */
+            box-shadow: 
+                inset 1px 1px 2px rgba(255,255,255,0.9),
+                inset -1px -1px 3px rgba(0,0,0,0.05),
+                0 4px 6px -1px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .glass-btn:active {
+            box-shadow: 
+                inset 2px 2px 5px rgba(0,0,0,0.1),
+                inset -1px -1px 2px rgba(255,255,255,0.5),
+                0 1px 2px rgba(0,0,0,0.05);
+            transform: translateY(2px);
         }
     </style>
 </head>
 <body class="p-8">
 
-    <div class="glass-panel max-w-2xl w-full rounded-[40px] p-10 text-gray-800">
+    <div class="glass-panel max-w-2xl w-full rounded-[40px] p-10 text-slate-700">
         
         <div class="flex justify-between items-center mb-10">
-            <h1 class="text-2xl font-semibold tracking-tight">White Glass Foundations</h1>
+            <h1 class="text-2xl font-bold tracking-tight drop-shadow-sm">Liquid Glass Foundations</h1>
             <div class="flex gap-2">
-                <button class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition">+</button>
+                <button class="w-10 h-10 rounded-full glass-btn flex items-center justify-center font-bold">+</button>
             </div>
         </div>
 
         <div class="grid grid-cols-3 gap-6 mb-12">
-            <div class="liquid-card h-32 rounded-3xl cursor-pointer bg-gradient-to-br from-orange-300/60 to-red-400/50 shadow-[inset_0_0_30px_rgba(255,160,100,0.3)]"></div>
-            
-            <div class="liquid-card h-32 rounded-3xl cursor-pointer bg-gradient-to-br from-blue-300/60 to-indigo-400/50 shadow-[inset_0_0_30px_rgba(100,160,255,0.3)]"></div>
-            
-            <div class="liquid-card h-32 rounded-3xl cursor-pointer border-gray-200 hover:border-white/50"></div>
+            <div class="liquid-block color-orange h-32 cursor-pointer"></div>
+            <div class="liquid-block color-blue h-32 cursor-pointer"></div>
+            <div class="liquid-block color-clear h-32 cursor-pointer"></div>
         </div>
 
         <div class="space-y-6">
-            <p class="text-sm font-medium opacity-60 uppercase tracking-widest">Surface 01</p>
+            <p class="text-xs font-bold opacity-50 uppercase tracking-widest">Surface 01</p>
             
             <div class="flex flex-wrap gap-4 items-center">
-                <button class="px-6 py-3 rounded-2xl glass-panel text-sm hover:backdrop-blur-[10px] hover:bg-gray-100 hover:border-gray-200 transition">
+                <button class="px-6 py-3 rounded-2xl glass-btn text-sm font-medium">
                     Glass blur 24
                 </button>
                 
                 <div class="flex gap-2">
-                    <span class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-xs font-semibold">4</span>
-                    <span class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-xs font-bold shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]">12</span>
-                    <span class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-xs font-semibold">16</span>
+                    <span class="w-12 h-12 rounded-full glass-btn flex items-center justify-center text-sm font-bold">4</span>
+                    <span class="w-12 h-12 rounded-full glass-btn bg-white/40 flex items-center justify-center text-sm font-bold shadow-inner">12</span>
+                    <span class="w-12 h-12 rounded-full glass-btn flex items-center justify-center text-sm font-bold">16</span>
                 </div>
 
-                <button class="px-6 py-3 rounded-2xl bg-gray-50 border border-gray-200 text-sm opacity-60">
+                <button class="px-6 py-3 rounded-2xl glass-btn opacity-60 text-sm font-medium">
                     Shadow soft
                 </button>
-            </div>
-        </div>
-
-        <div class="mt-12">
-            <p class="text-sm font-medium opacity-60 mb-4">Radius Style</p>
-            <div class="flex gap-4">
-                <div class="w-12 h-12 rounded-full border-4 border-dashed border-blue-600/60 flex items-center justify-center font-bold text-blue-700 bg-white/50">16</div>
-                <div class="w-12 h-12 rounded-full border-4 border-green-600/30 flex items-center justify-center font-bold text-green-700 bg-white/50">10</div>
-                <div class="w-12 h-12 rounded-full border-4 border-orange-600/80 flex items-center justify-center font-bold text-orange-700 bg-white/50">20</div>
-                <div class="w-12 h-12 rounded-full border-4 border-purple-600/30 flex items-center justify-center font-bold text-purple-700 bg-white/50">24</div>
             </div>
         </div>
     </div>
