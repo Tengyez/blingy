@@ -3,156 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Anniversary | Liquid Glass</title>
+    <title>Anniversary | Liquid Glass Rose</title>
     <style>
         :root {
-            --accent: #ff7eb3;
-            --accent-2: #8b5cf6;
-            --glass: rgba(255, 255, 255, 0.12);
+            --rose-deep: #e11d48;
+            --rose-light: #fb7185;
+            --glass: rgba(255, 255, 255, 0.1);
         }
 
         body {
             margin: 0;
-            padding: 0;
-            background-color: #050505;
+            background: #020617;
             color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
 
-        /* Animated Liquid Background */
-        .liquid-bg {
+        /* The Rose Container - Fixed in center */
+        .rose-container {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #1e1b4b, #000);
-            overflow: hidden;
-        }
-
-        .blob {
-            position: absolute;
-            width: 60vw;
-            height: 60vw;
-            background: linear-gradient(45deg, var(--accent), var(--accent-2));
-            filter: blur(80px);
-            border-radius: 50%;
-            opacity: 0.4;
-            animation: move 20s infinite alternate;
-        }
-
-        @keyframes move {
-            from { transform: translate(-10%, -10%) rotate(0deg); }
-            to { transform: translate(20%, 20%) rotate(360deg); }
-        }
-
-        /* Scroll-Driven Containers */
-        section {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
-        }
-
-        .glass-card {
-            width: 80%;
-            max-width: 600px;
-            padding: 3rem;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 32px;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            
-            /* Scroll Animation Entry */
-            view-timeline-name: --card;
-            view-timeline-axis: block;
-            animation-linear-shape: linear;
-            animation-timeline: --card;
-            animation-name: showCard;
-            animation-range: entry 10% cover 50%;
-            animation-fill-mode: both;
-        }
-
-        @keyframes showCard {
-            from { opacity: 0; transform: translateY(100px) rotateX(-20deg) scale(0.8); }
-            to { opacity: 1; transform: translateY(0) rotateX(0) scale(1); }
-        }
-
-        h1 { font-size: 3.5rem; margin: 0; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p { font-size: 1.2rem; line-height: 1.6; opacity: 0.9; }
-
-        .anniversary-year {
-            font-size: 8rem;
-            font-weight: 900;
-            position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: -1;
-            opacity: 0.1;
-            color: white;
+            width: 300px;
+            height: 300px;
+            z-index: 5;
             pointer-events: none;
         }
 
-        /* Scroll Indicator */
-        .indicator {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            opacity: 0.5;
-            animation: bounce 2s infinite;
+        .petal {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            fill: var(--rose-deep);
+            filter: drop-shadow(0 0 15px rgba(225, 29, 72, 0.4));
+            backdrop-filter: blur(5px);
+            opacity: 0.8;
+            
+            /* Scroll Animation Link */
+            animation-timeline: scroll();
+            animation-fill-mode: both;
         }
 
-        @keyframes bounce {
-            0%, 100% { bottom: 20px; }
-            50% { bottom: 30px; }
+        /* Individual Petal Scroll Logic */
+        .p1 { animation-name: slide-p1; animation-range: 0% 30%; }
+        .p2 { animation-name: slide-p2; animation-range: 10% 50%; opacity: 0.6; fill: var(--rose-light); }
+        .p3 { animation-name: slide-p3; animation-range: 30% 80%; scale: 0.7; }
+
+        @keyframes slide-p1 {
+            from { transform: translateX(-200%) rotate(-45deg); opacity: 0; }
+            to { transform: translateX(0) rotate(0deg); opacity: 0.8; }
+        }
+        @keyframes slide-p2 {
+            from { transform: translateX(200%) rotate(45deg); opacity: 0; }
+            to { transform: translateX(0) rotate(0deg); opacity: 0.6; }
+        }
+        @keyframes slide-p3 {
+            from { transform: translateY(200%) scale(0.2); opacity: 0; }
+            to { transform: translateY(0) scale(0.7); opacity: 0.9; }
+        }
+
+        /* Glass Content Sections */
+        section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+        }
+
+        section:nth-child(even) { justify-content: flex-end; }
+
+        .glass-card {
+            width: 350px;
+            padding: 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            z-index: 10;
+            view-timeline: --section;
+            animation: fade-in both;
+            animation-timeline: --section;
+            animation-range: entry 20% cover 50%;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), #1e1b4b 0%, #020617 50%);
+            z-index: -1;
         }
     </style>
 </head>
 <body>
 
-    <div class="liquid-bg">
-        <div class="blob"></div>
+    <div class="bg-glow" id="glow"></div>
+
+    <div class="rose-container">
+        <svg viewBox="0 0 100 100" class="petal p1">
+            <path d="M50 50 C 20 20, 10 70, 50 90 C 90 70, 80 20, 50 50" />
+        </svg>
+        <svg viewBox="0 0 100 100" class="petal p2">
+            <path d="M50 40 C 10 10, 0 60, 50 80 C 100 60, 90 10, 50 40" />
+        </svg>
+        <svg viewBox="0 0 100 100" class="petal p3">
+            <path d="M50 30 C 30 0, 0 40, 50 70 C 100 40, 70 0, 50 30" />
+        </svg>
     </div>
 
-    <div class="indicator">SCROLL DOWN</div>
-
     <section>
         <div class="glass-card">
-            <h1>Happy Anniversary</h1>
-            <p>Another year of incredible memories, shared laughter, and a journey that gets better every single day.</p>
+            <h2>The First Bloom</h2>
+            <p>A year ago, our journey began. Like a single petal, it was the start of something beautiful.</p>
         </div>
-        <div class="anniversary-year">01</div>
     </section>
 
     <section>
         <div class="glass-card">
-            <h1>The Journey</h1>
-            <p>Through every twist and turn, your partnership has been a beacon of strength and inspiration to everyone around you.</p>
+            <h2>Growing Together</h2>
+            <p>Every day adds a new layer to our story. More vibrant, more resilient, and more clear.</p>
         </div>
-        <div class="anniversary-year">02</div>
     </section>
 
     <section>
         <div class="glass-card">
-            <h1>Cheers to Forever</h1>
-            <p>Here's to the love that keeps growing. May your day be as sparkling and clear as fine glass. Congratulations!</p>
-            <button style="margin-top: 20px; padding: 12px 24px; border-radius: 50px; border: none; background: white; color: black; cursor: pointer; font-weight: bold;">Celebrate Now</button>
+            <h2>Infinite Love</h2>
+            <p>Congratulations on another wonderful year. May our love continue to bloom forever.</p>
         </div>
-        <div class="anniversary-year">03</div>
     </section>
 
     <script>
-        // Optional subtle parallax for the background blob
-        window.addEventListener('scroll', () => {
-            const scroll = window.pageYOffset;
-            document.querySelector('.blob').style.transform = `translate(${scroll * 0.1}px, ${scroll * 0.2}px) rotate(${scroll * 0.05}deg)`;
+        // Interactive glow following mouse
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.getElementById('glow');
+            glow.style.setProperty('--x', e.clientX + 'px');
+            glow.style.setProperty('--y', e.clientY + 'px');
         });
     </script>
 </body>
