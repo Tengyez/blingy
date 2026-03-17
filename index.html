@@ -1,149 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anniversary | Liquid Glass Rose</title>
-    <style>
-        :root {
-            --rose-deep: #e11d48;
-            --rose-light: #fb7185;
-            --glass: rgba(255, 255, 255, 0.1);
-        }
+    <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Liquid Glass Interface</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+                    body {
+                                    /* Using a mesh gradient background to simulate the image atmosphere */
+                                    background: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                                                                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                                                                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+                                    background-color: #0f172a;
+                                    min-height: 100vh;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                    }
 
-        body {
-            margin: 0;
-            background: #020617;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
+                    .glass-panel {
+                                    background: rgba(255, 255, 255, 0.05);
+                                    backdrop-filter: blur(24px) saturate(180%);
+                                    -webkit-backdrop-filter: blur(24px) saturate(180%);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+                    }
 
-        /* The Rose Container - Fixed in center */
-        .rose-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            z-index: 5;
-            pointer-events: none;
-        }
+                    .liquid-card {
+                                    background: rgba(255, 255, 255, 0.1);
+                                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                                    border: 1px solid rgba(255, 255, 255, 0.2);
+                                    position: relative;
+                                    overflow: hidden;
+                    }
 
-        .petal {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            fill: var(--rose-deep);
-            filter: drop-shadow(0 0 15px rgba(225, 29, 72, 0.4));
-            backdrop-filter: blur(5px);
-            opacity: 0.8;
-            
-            /* Scroll Animation Link */
-            animation-timeline: scroll();
-            animation-fill-mode: both;
-        }
+                    /* The "Glow" effect inside the glass buttons */
+                    .liquid-card::before {
+                                    content: "";
+                                    position: absolute;
+                                    top: -50%; left: -50%;
+                                    width: 200%; height: 200%;
+                                    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+                                    transform: scale(0);
+                                    transition: transform 0.6s ease;
+                    }
 
-        /* Individual Petal Scroll Logic */
-        .p1 { animation-name: slide-p1; animation-range: 0% 30%; }
-        .p2 { animation-name: slide-p2; animation-range: 10% 50%; opacity: 0.6; fill: var(--rose-light); }
-        .p3 { animation-name: slide-p3; animation-range: 30% 80%; scale: 0.7; }
+                    .liquid-card:hover::before {
+                                    transform: scale(1);
+                    }
 
-        @keyframes slide-p1 {
-            from { transform: translateX(-200%) rotate(-45deg); opacity: 0; }
-            to { transform: translateX(0) rotate(0deg); opacity: 0.8; }
-        }
-        @keyframes slide-p2 {
-            from { transform: translateX(200%) rotate(45deg); opacity: 0; }
-            to { transform: translateX(0) rotate(0deg); opacity: 0.6; }
-        }
-        @keyframes slide-p3 {
-            from { transform: translateY(200%) scale(0.2); opacity: 0; }
-            to { transform: translateY(0) scale(0.7); opacity: 0.9; }
-        }
+                    .liquid-card:hover {
+                                    transform: translateY(-5px);
+                                    background: rgba(255, 255, 255, 0.15);
+                                    box-shadow: 0 15px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.1);
+                    }
+                </style>
+    </head>
+    <body class="p-8">
 
-        /* Glass Content Sections */
-        section {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 0 10%;
-        }
+            <div class="glass-panel max-w-2xl w-full rounded-[40px] p-10 text-white">
 
-        section:nth-child(even) { justify-content: flex-end; }
+                        <div class="flex justify-between items-center mb-10">
+                                        <h1 class="text-2xl font-semibold tracking-tight">Liquid Glass Foundations</h1>h1>
+                                        <div class="flex gap-2">
+                                                            <div class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center">+</div>div>
+                                        </div>div>
+                        </div>div>
 
-        .glass-card {
-            width: 350px;
-            padding: 2rem;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 24px;
-            z-index: 10;
-            view-timeline: --section;
-            animation: fade-in both;
-            animation-timeline: --section;
-            animation-range: entry 20% cover 50%;
-        }
+                        <div class="grid grid-cols-3 gap-6 mb-12">
+                                        <div class="liquid-card h-32 rounded-3xl cursor-pointer bg-gradient-to-br from-orange-400/30 to-red-500/20 shadow-[inset_0_0_20px_rgba(251,146,60,0.2)]"></div>div>
 
-        @keyframes fade-in {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+                                        <div class="liquid-card h-32 rounded-3xl cursor-pointer bg-gradient-to-br from-blue-400/30 to-indigo-600/20 shadow-[inset_0_0_20px_rgba(96,165,250,0.2)]"></div>div>
 
-        .bg-glow {
-            position: fixed;
-            width: 100vw; height: 100vh;
-            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), #1e1b4b 0%, #020617 50%);
-            z-index: -1;
-        }
-    </style>
-</head>
-<body>
+                                        <div class="liquid-card h-32 rounded-3xl cursor-pointer border-white/10"></div>div>
+                        </div>div>
 
-    <div class="bg-glow" id="glow"></div>
+                        <div class="space-y-6">
+                                        <p class="text-sm font-medium opacity-60 uppercase tracking-widest">Surface 01</p>p>
 
-    <div class="rose-container">
-        <svg viewBox="0 0 100 100" class="petal p1">
-            <path d="M50 50 C 20 20, 10 70, 50 90 C 90 70, 80 20, 50 50" />
-        </svg>
-        <svg viewBox="0 0 100 100" class="petal p2">
-            <path d="M50 40 C 10 10, 0 60, 50 80 C 100 60, 90 10, 50 40" />
-        </svg>
-        <svg viewBox="0 0 100 100" class="petal p3">
-            <path d="M50 30 C 30 0, 0 40, 50 70 C 100 40, 70 0, 50 30" />
-        </svg>
-    </div>
+                                        <div class="flex flex-wrap gap-4 items-center">
+                                                            <button class="px-6 py-3 rounded-2xl glass-panel text-sm hover:bg-white/10 transition-colors">
+                                                                                    Glass blur 24
+                                                            </button>button>
 
-    <section>
-        <div class="glass-card">
-            <h2>The First Bloom</h2>
-            <p>A year ago, our journey began. Like a single petal, it was the start of something beautiful.</p>
-        </div>
-    </section>
+                                                            <div class="flex gap-2">
+                                                                                    <span class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-xs">4</span>span>
+                                                                                    <span class="w-10 h-10 rounded-full bg-white/10 border border-white/30 flex items-center justify-center text-xs">12</span>span>
+                                                                                    <span class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-xs">16</span>span>
+                                                            </div>div>
 
-    <section>
-        <div class="glass-card">
-            <h2>Growing Together</h2>
-            <p>Every day adds a new layer to our story. More vibrant, more resilient, and more clear.</p>
-        </div>
-    </section>
+                                                            <button class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm opacity-50">
+                                                                                    Shadow soft
+                                                            </button>button>
+                                        </div>div>
+                        </div>div>
 
-    <section>
-        <div class="glass-card">
-            <h2>Infinite Love</h2>
-            <p>Congratulations on another wonderful year. May our love continue to bloom forever.</p>
-        </div>
-    </section>
+                        <div class="mt-12">
+                                        <p class="text-sm font-medium opacity-60 mb-4">Radius Style</p>p>
+                                        <div class="flex gap-4">
+                                                            <div class="w-12 h-12 rounded-full border-4 border-dashed border-blue-500 flex items-center justify-center font-bold text-blue-400">16</div>div>
+                                                            <div class="w-12 h-12 rounded-full border-4 border-green-500/50 flex items-center justify-center font-bold text-green-400">10</div>div>
+                                                            <div class="w-12 h-12 rounded-full border-4 border-orange-500 flex items-center justify-center font-bold text-orange-400">20</div>div>
+                                                            <div class="w-12 h-12 rounded-full border-4 border-purple-500/50 flex items-center justify-center font-bold text-purple-400">24</div>div>
+                                        </div>div>
+                        </div>div>
+            </div>div>
 
-    <script>
-        // Interactive glow following mouse
-        document.addEventListener('mousemove', (e) => {
-            const glow = document.getElementById('glow');
-            glow.style.setProperty('--x', e.clientX + 'px');
-            glow.style.setProperty('--y', e.clientY + 'px');
-        });
-    </script>
-</body>
-</html>
+    </body>body>
+</html>html>
+
+        </style></title>
+    </head>
